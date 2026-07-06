@@ -54,6 +54,29 @@ def add_expense():
         "note"    : note,
         "date"    : date
     }
-
     return expense
+
+def view_expenses(expenses):
+    print("\n========================================")
+    print("         YOUR EXPENSES SO FAR")
+    print("========================================")
+
+    if len(expenses) == 0:
+        print("No expenses added yet.")
+        return
+
+    total = 0
+
+    for i, expense in enumerate(expenses):
+        print(f"\n  [{i + 1}] Date     : {expense['date']}")
+        print(f"       Amount   : ₹{expense['amount']:.2f}")
+        print(f"       Category : {expense['category']}")
+        print(f"       Note     : {expense['note']}")
+        total += expense['amount']
+
+    print("\n----------------------------------------")
+    print(f"  TOTAL SPENT  : ₹{total:.2f}")
+    print(f"  TOTAL ENTRIES: {len(expenses)}")
+    print("========================================\n")
+
 
