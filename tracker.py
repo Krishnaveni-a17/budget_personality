@@ -25,6 +25,7 @@ def get_category():
     print("Valid categories:", VALID_CATEGORIES)
     while True:
         category = input("Enter category: ")
+        category=category.strip().capitalize()
         if category in VALID_CATEGORIES:
             return category
         else:
@@ -32,13 +33,22 @@ def get_category():
 
 
 def get_note():
-    note = input("Enter a short note (e.g. Swiggy, Ola, EB Bill): ")
-    return note
+    while True:
+        note = input("Enter a short note (e.g. Swiggy, Ola, EB Bill): ")
+        note =note.strip()
+        if len(note)>0:
+            return note
+        else:
+            print("Note cannot be empty. Please enter something.")
 
 
 def get_date():
-    date = input("Enter date (YYYY-MM-DD), e.g. 2026-07-03: ")
-    return date
+    while True:
+        date = input("Enter date (YYYY-MM-DD), e.g. 2026-07-03: ")
+        if len(date)==10 and date[4]=="-" and date[7]=='-':
+            return date
+        else:
+            print(f"'{date}' is not valid.")
 
 
 def add_expense():
