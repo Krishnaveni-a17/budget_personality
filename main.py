@@ -1,19 +1,20 @@
-#This is the main.py
-#this is the entry point of app
-#It connects all files together
-
-
 # main.py
+# Entry point of the Spending Personality Analyser.
+# Connects all modules and runs the main app loop.
 
-from tracker import add_expense, view_expenses
+from tracker import add_expense, view_expenses, save_expenses, load_expenses
 
 
 def main():
     print("==========================================")
-    print("  Welcome to Spending Personality Analyser")
+    print("  Spending Personality Analyser")
     print("==========================================")
 
-    expenses = []          # this is your notebook — starts empty every run
+    # Load existing expenses from file when app starts.
+    # First run: file doesn't exist yet → load_expenses() returns []
+    # Every run after: loads saved expenses from data/expenses.json
+    expenses = load_expenses()
+    print(f"  Loaded {len(expenses)} existing expense(s).")
 
     while True:
         print("\nWhat do you want to do?")
@@ -21,22 +22,25 @@ def main():
         print("  2. View all expenses")
         print("  3. Quit")
 
-        choice = input("\nEnter choice (1/2/3): ")
+        choice = input("\nEnter choice (1/2/3): ").strip()
 
         if choice == "1":
             expense = add_expense()
             expenses.append(expense)
-            print("Expense added successfully!")
+            save_expenses(expenses)
+            print(f"\n  Saved: ₹{expense['amount']:.2f} for "
+                  f"{expense['category']} ({expense['note']}) "
+                  f"on {expense['date']}")
 
         elif choice == "2":
             view_expenses(expenses)
 
         elif choice == "3":
-            print("Goodbye! See you tomorrow.")
+            print("Goodbye!")
             break
 
         else:
-            print("Invalid choice. Please enter 1, 2, or 3.")
+            print(f"  '{choice}' is not valid. Enter 1, 2, or 3.")
 
 
 main()
