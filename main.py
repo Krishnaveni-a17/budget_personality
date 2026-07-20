@@ -4,6 +4,7 @@
 
 from tracker  import add_expense, view_expenses, save_expenses, load_expenses
 from analyser import run_analysis
+from report   import generate_report
 
 
 def main():
@@ -39,18 +40,7 @@ def main():
                 print("\n  No expenses yet. Add some first!")
             else:
                 grouped, percentages, personality = run_analysis(expenses)
-
-                print("\n========================================")
-                print("         SPENDING BREAKDOWN")
-                print("========================================")
-                for category, pct in percentages.items():
-                    amount = grouped[category]
-                    print(f"  {category:15} ₹{amount:>8.2f}   {pct:.1f}%")
-
-                print("\n----------------------------------------")
-                print(f"  YOUR PERSONALITY: {personality[0]}")
-                print(f"  {personality[1]}")
-                print("========================================\n")
+                generate_report(expenses, grouped, percentages, personality)
 
         elif choice == "4":
             print("Goodbye!")
